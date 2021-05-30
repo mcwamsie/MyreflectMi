@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>reflectMi</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div id="dateCorner">
+        <div class="d-flex align-items-center mb-4">
+            <div><i class="far fa-clock d-flex justify-content-center align-items-center" id="dateCorner-Icon"></i>
+            </div>
+            <div class="col pr-0">
+                <h1 class="d-flex justify-content-between mb-0" id="dateCorner-Date">
+                    <span id="dateCorner-Day">Friday,</span>
+                    <span id="dateCorner-Month">June</span>
+                    <span id="dateCorner-set-Date">12</span>
+                    <span id="dateCorner-Year" class="ml-2">2020</span>
+                </h1>
+                <div id="dateCorner-Time">
+                    <span id="dateCorner-MinutesAndHours" class="d-block mb-0">12:41</span>
+                    <span id="dateCorner-Seconds" class="d-block">34</span>
+                    <span id="dateCorner-PmOrAm"class="d-block">PM</span></div>
+            </div>
+        </div>
+        <div id="bodyTemperature-Container">
+            <div id="bodyTemperature" class="rounded-0"><span id="bodyTemperature-Reading">36.7</span><span
+                    id="bodyTemperature-DegreesSign">o</span></div><span id="bodyTemperature-Label">Body
+                Temperature</span>
+        </div>
+    </div>
+    <div id="weatherCorner">
+        <div id="weatherCorner-Top" class="d-flex align-items-center">
+            <div class="d-flex flex-column justify-content-center align-items-center" id="weatherCorner-Left"><i
+                    class="fas fa-sun d-flex justify-content-center align-items-center text-warning"
+                    id="weatherCorner-Icon"></i><span id="weatherCorner-Description">Sunny</span></div>
+            <div class="d-flex align-items-center mr-auto" id="weatherCorner-Center"><span
+                    id="weatherCornerReading">29.4</span><span id="WeatherCorner-Center-Degrees">o</span></div>
+        </div>
+        <div id="weatherCorner-Bottom">
+            <div class="table-responsive table-borderless">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Min</th>
+                            <th>Max</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr>
+                            <td>Sat</td>
+                            <td><span><i
+                                        class="fas fa-cloud-sun-rain weatherCorner-Icon mostly-cloudy-color"></i></span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sun</td>
+                            <td><span><i class="fas fa-cloud-showers-heavy weatherCorner-Icon showers-color"></i></span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mon</td>
+                            <td><span><i class="fas fa-cloud-sun weatherCorner-Icon partial-cloudy-color"></i></span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tue</td>
+                            <td><span><i class="fas fa-sun weatherCorner-Icon sun-color"></i></span></td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center mr-auto"><span
+                                        class="weather-Reading">29.4</span><span class="Weather-Degrees">o</span></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="calendaCorner">
+        <div id="calendaCorner-Top" class="d-flex align-items-center justify-content-between">
+            <div class="d-flex flex-column justify-content-center align-items-center" id="calendaCorner-Left"><i
+                    class="fas fa-birthday-cake d-flex justify-content-center align-items-center text-danger"
+                    id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Upcoming</span></div>
+            <div class="flex-wrap d-flex align-items-center col px-0" id="calendaCorner-Right"><span
+                    id="calendaCorner-Event" class="col-12 px-0">Governor's Birthday</span><span
+                    id="calendaCorner-Event-1">10 days</span><span id="calendaCorner-Event-Date" class="ml-3">22.06.20
+                    00:00</span></div>
+        </div>
+        <div id="calendaCorner-Bottom">
+            <div class="table-borderless">
+                <table id="calendarTable" class="table table-bordered table-sm border-0 mb-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="newsCorner">
+        <div class="d-flex align-items-center" id="newsCorner-Header">
+            <div class="d-flex flex-column justify-content-center align-items-center"><i
+                    class="far fa-newspaper d-flex justify-content-center align-items-center"
+                    id="newsCorner-Icon"></i><span id="newsCorner-Description">Headlines</span></div><span
+                id="newsCorner-Title" class="col px-0 d-block h-100">Schools opens in 2 weeks and inflation rise by
+                50%</span>
+        </div>
+        <div id="newsCorner-Body">
+            <div class="table-borderless">
+                <table class="table table-bordered table-sm border-0 mb-0"
+                    style="width: 320px;max-width: 320px;overflow: hidden;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>
+                            <td class="small">Schools close before blah blah blah blah blah blah blah blad</td>
+                        </tr>
+                        <tr>
+                            <td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>
+                            <td class="small">Schools close before blah blah blah blah blah blah blah blad</td>
+                        </tr>
+                        <tr>
+                            <td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>
+                            <td class="small">Schools close before blah blah blah blah blah blah blah blad</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./assets/js/socket.io/socket.io.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
