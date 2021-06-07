@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var calendarItems = []
     var refreshTime;
+
+    var current, location, forecast=[];
     const dateTime = () => {
         var e = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             t = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -43,14 +45,14 @@ $(document).ready(function () {
 
     const updateCalendar = () => {
         if (calendarItems.length <= 0) {
-            $('#calendaCorner-Left').html('<i class="far fa-calendar-times d-flex justify-content-center align-items-center text-danger" id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Calendar</span>');
-            $('#calendaCorner-Right').html('<h3>No Calendar Items</h3>');
+            $('#calendaCorner-Left').html('<i class="far fa-calendar-times d-flex justify-content-center align-items-center text-white" id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Calendar</span>');
+            $('#calendaCorner-Right').html('<h4>No Calendar Items</h4>');
             $('#calendarTable tbody').empty();
         }
         else if (calendarItems.length === 1) {
             $('#calendaCorner-Left').html('<i class="' +
                 getIcon(calendarItems[0].EventTypeName) +
-                ' d-flex justify-content-center align-items-center text-danger" id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Upcoming</span>');
+                ' d-flex justify-content-center align-items-center text-white" id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Upcoming</span>');
 
             $('#calendaCorner-Right').html('<span id="calendaCorner-Event" class="col-12 px-0">' +
                 calendarItems[0].eventName +
@@ -63,7 +65,7 @@ $(document).ready(function () {
             // console.log(calendarItems);
             $('#calendaCorner-Left').html('<i class="' +
                 getIcon(calendarItems[0].EventTypeName) +
-                ' d-flex justify-content-center align-items-center text-danger" id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Upcoming</span>');
+                ' d-flex justify-content-center align-items-center text-primary" id="calendaCorner-Icon"></i><span id="calendaCorner-Description">Upcoming</span>');
 
             $('#calendaCorner-Right').html('<span id="calendaCorner-Event" class="col-12 px-0">' +
                 calendarItems[0].eventName +
@@ -193,16 +195,65 @@ $(document).ready(function () {
     socket = io.connect('http://127.0.0.1:5005')
     socket.on('calendar_update', function (msg) {
         console.log(msg);
-        $.getJSON('http://127.0.0.1:5005/calendar',
-            function (data, textStatus, jqXHR) {
-                console.log(data);
-                calendarItems = data.items
-                console.log(textStatus);
-            }
-        );
+        calendarItems = msg.items
+        //$.getJSON('http://127.0.0.1:5005/calendar',
+        //    function (data, textStatus, jqXHR) {
+        //        console.log(data);
+        //        calendarItems = data.items
+        //        console.log(textStatus);
+        //    }
+        //);
+    });
+    //'https://api.openweathermap.org/data/2.5/forecast/daily?q=chinhoyi&cnt=3&appid=6bddd259787886f8dd9584cf157c1bfd'
+    fetch('https://api.weatherapi.com/v1/forecast.json?key=bf6cfff3323648d8b03132743210406&q=chinhoyi&days=10')
+    .then(response => response.json())
+    .then(data=>{
+       // console.log(data);
+        forecast= data.forecast.forecastday;
+        current= data.current;
+        location = data.location;
+        updateWeather();
     });
 
-    setInterval(dateTime, 1e3)
-    setInterval(updateCalendar, 1e3)
-    setInterval(scanDeleteAndSort, 1e3)
+    function updateWeather() {
+        console.log(forecast);
+        console.log(current);
+        if (forecast.length ===0) {
+            $('#weatherCorner').html('<div id="weatherCorner-Top" class="d-flex align-items-center">'+
+            '<div class="d-flex flex-column justify-content-center align-items-center" id="weatherCorner-Left"><i class="fas fa-exclamation-triangle d-flex justify-content-center align-items-center text-warning"'+
+           '  id="weatherCorner-Icon"></i><span id="weatherCorner-Description">Offline</span></div>'+
+           ' <div class="d-flex align-items-center mr-auto" id="weatherCorner-Center"> '+
+           '<h4>No internet connection</h4>'+
+          ' </div> '+
+      '  </div>');
+        }
+        else{
+            $('#weatherCorner-Top').html(
+            '<div class="d-flex flex-column justify-content-center align-items-center" id="weatherCorner-Left">'+
+            '<img src="'+ current.condition.icon+'" >'+
+            '<span id="weatherCorner-Description" class="font-weight-bold mb-0">'+ current.condition.text +'</span> '+
+            '</div>'+
+            '<div class="d-flex align-items-center mr-2" id="weatherCorner-Center">'+
+            '<span id="weatherCornerReading" class="mb-0 ">'+current.feelslike_c+'</span>'+
+            '<span id="WeatherCorner-Center-Degrees">o</span>'+
+            '</div>'+
+            '<div id="weatherCornerRight">'+
+            '<div class="d-flex align-items-start justify-content-between flex-column px-1" style="font-size:13px"> '+
+            '<span>MIN: '+ forecast[0].day.mintemp_c+'</span>'+
+            '<span>MAX: '+ forecast[0].day.maxtemp_c+'</span>'+
+            '</div>'+
+            '</div>'+
+            '<div class="col-12">'+
+            '<span></span>'+
+            '</div>'
+
+            ).addClass('flex-wrap');
+        }
+    }    
+
+    setInterval(dateTime, 1e3);
+    setInterval(updateCalendar, 1e3);
+    setInterval(scanDeleteAndSort, 1e3);
+
+    updateWeather();
 });
