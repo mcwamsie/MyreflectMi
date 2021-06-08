@@ -3,6 +3,7 @@ $(document).ready(function () {
     var refreshTime;
 
     var current, location, forecast=[];
+    var newsHeadlines= [];
     const dateTime = () => {
         var e = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             t = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -215,17 +216,34 @@ $(document).ready(function () {
         updateWeather();
     });
 
+
+    //$.get("https://cdn.feedcontrol.net/1166/2068-Sjg3nFeLJ1NFw.xml", 
+    //    function (data, textStatus, jqXHR) {
+    //        console.log(data);
+    //    },
+    //    "dataType"
+    //);
+
+    //https://createfeed.fivefilters.org/extract.php?url=https%3A%2F%2Fwww.herald.co.zw%2Fcategory%2Farticles%2Ftop-stories%2F&item=%23sirius-article-list+.hentry.sirius-card&item_title=h3.entry-title.list-article-title&item_desc=p.entry-summary
+    fetch('https://cdn.feedcontrol.net/1166/2068-Sjg3nFeLJ1NFw.json')
+    .then(response => response.json())
+    .then(data=>{
+      // console.log(data);
+        newsHeadlines = data.rss.channel.item
+        updateNews()
+    });
+
     function updateWeather() {
         console.log(forecast);
         console.log(current);
+        console.log(location);
         if (forecast.length ===0) {
-            $('#weatherCorner').html('<div id="weatherCorner-Top" class="d-flex align-items-center">'+
+            $('#weatherCorner-Top').html(
             '<div class="d-flex flex-column justify-content-center align-items-center" id="weatherCorner-Left"><i class="fas fa-exclamation-triangle d-flex justify-content-center align-items-center text-warning"'+
            '  id="weatherCorner-Icon"></i><span id="weatherCorner-Description">Offline</span></div>'+
            ' <div class="d-flex align-items-center mr-auto" id="weatherCorner-Center"> '+
            '<h4>No internet connection</h4>'+
-          ' </div> '+
-      '  </div>');
+          ' </div> ');
         }
         else{
             $('#weatherCorner-Top').html(
@@ -233,27 +251,71 @@ $(document).ready(function () {
             '<img src="'+ current.condition.icon+'" >'+
             '<span id="weatherCorner-Description" class="font-weight-bold mb-0">'+ current.condition.text +'</span> '+
             '</div>'+
-            '<div class="d-flex align-items-center mr-2" id="weatherCorner-Center">'+
+            '<div class="col">'+
+            '<div class="row no-gutter">'+
+            '<div class="d-flex align-items-center mr-3" id="weatherCorner-Center">'+
             '<span id="weatherCornerReading" class="mb-0 ">'+current.feelslike_c+'</span>'+
             '<span id="WeatherCorner-Center-Degrees">o</span>'+
             '</div>'+
             '<div id="weatherCornerRight">'+
-            '<div class="d-flex align-items-start justify-content-between flex-column px-1" style="font-size:13px"> '+
-            '<span>MIN: '+ forecast[0].day.mintemp_c+'</span>'+
-            '<span>MAX: '+ forecast[0].day.maxtemp_c+'</span>'+
+            '<div class="d-flex align-items-start justify-content-center flex-column px-1 h-100" style="font-size:13px"> '+
+            '<span >MIN: '+ forecast[0].day.mintemp_c+'</span>'+
+            '<span >MAX: '+ forecast[0].day.maxtemp_c+'</span>'+
             '</div>'+
             '</div>'+
-            '<div class="col-12">'+
-            '<span></span>'+
+            '<div class="col-12 px-0" style="font-size: 13px">'+
+            '<span class="text-uppercase font-weight-bold">'+ location.name+', &nbsp;</span>'+
+            '<span class="text-uppercase font-weight-bold">'+ location.region+'</span>'+
+            '</div>'+
+            '</div>'+
             '</div>'
-
             ).addClass('flex-wrap');
+
+            $('#weatherCorner-Bottom').html(
+                '<div class="table-borderless">'+
+                '<table id="WeatherTable" class="table table-bordered table-sm border-0 mb-0">'+
+                '<thead>'+
+                '<tr>'+
+                '<th></th>'+
+                '<th></th>'+
+                '<th class="text-right">Max</th>'+
+                '<th class="text-right">Min</th>'+
+                '</tr>'+
+                '</thead>'+
+                '<tbody>'+
+                '<tr>'+
+                '<td>'+
+                '<img width="40"  src="'+forecast[1].day.condition.icon+'"/>'+
+                '</td>'+
+                '<td>'+forecast[1].date+'</td>'+
+                '<td class="text-right">'+forecast[1].day.mintemp_c+'</td>'+
+                '<td class="text-right">'+forecast[1].day.maxtemp_c+'</td>'+
+                '</tr>'+
+                '</tr>'+
+
+                '<tr>'+
+                '<td>'+
+                '<img width="40"  src="'+forecast[1].day.condition.icon+'"/>'+
+                '</td>'+
+                '<td>'+forecast[2].date+'</td>'+
+                '<td class="text-right">'+forecast[2].day.mintemp_c+'</td>'+
+                '<td class="text-right">'+forecast[2].day.maxtemp_c+'</td>'+
+                '</tr>'+
+                '</tbody>'+
+                '</table>'+
+                '</div>'
+            );
         }
-    }    
+    } 
+
+    function updateNews(){
+        console.log( newsHeadlines );
+    }   
 
     setInterval(dateTime, 1e3);
     setInterval(updateCalendar, 1e3);
     setInterval(scanDeleteAndSort, 1e3);
 
     updateWeather();
+    updateNews();
 });
