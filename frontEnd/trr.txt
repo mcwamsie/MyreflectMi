@@ -1,0 +1,27 @@
+ $('#').html(
+                '<div class="table-borderless">'+
+                '<table class="table table-bordered table-sm border-0 mb-0"'+
+                'style="width: 320px;max-width: 320px;overflow: hidden;">'+
+                '<thead>'+
+                    <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>
+                            <td class="small">Schools close before blah blah blah blah blah blah blah blad</td>
+                        </tr>
+                        <tr>
+                            <td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>
+                            <td class="small">Schools close before blah blah blah blah blah blah blah blad</td>
+                        </tr>
+                        <tr>
+                            <td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>
+                            <td class="small">Schools close before blah blah blah blah blah blah blah blad</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>'
+            );

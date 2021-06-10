@@ -228,9 +228,9 @@ $(document).ready(function () {
     fetch('https://cdn.feedcontrol.net/1166/2068-Sjg3nFeLJ1NFw.json')
     .then(response => response.json())
     .then(data=>{
-      // console.log(data);
+      console.log(data);
         newsHeadlines = data.rss.channel.item
-        updateNews()
+       updateNews()
     });
 
     function updateWeather() {
@@ -278,8 +278,8 @@ $(document).ready(function () {
                 '<tr>'+
                 '<th></th>'+
                 '<th></th>'+
-                '<th class="text-right">Max</th>'+
                 '<th class="text-right">Min</th>'+
+                '<th class="text-right">Max</th>'+
                 '</tr>'+
                 '</thead>'+
                 '<tbody>'+
@@ -308,8 +308,53 @@ $(document).ready(function () {
         }
     } 
 
+    var newsIndex= 0;
     function updateNews(){
-        console.log( newsHeadlines );
+        //console.log( newsHeadlines );
+        if (newsHeadlines.length ===0) {
+            $('#newsCorner-Header').html(
+            '<div class="d-flex flex-column justify-content-center align-items-center" id="weatherCorner-Left"><i class="fas fa-exclamation-triangle d-flex justify-content-center align-items-center text-warning"'+
+           '  id="weatherCorner-Icon"></i><span id="weatherCorner-Description">Offline</span></div>'+
+           ' <div class="d-flex align-items-center mr-auto" id="weatherCorner-Center"> '+
+           '<h4>No internet connection</h4>'+
+          ' </div> ');
+        }
+        else{
+            $('#newsCorner-Header').html(
+                '<div class="d-flex flex-column justify-content-center align-items-center" id="weatherCorner-Left"><i class="far fa-newspaper d-flex justify-content-center align-items-center text-primary"'+
+               '  id="weatherCorner-Icon"></i><span id="weatherCorner-Description">Headlines</span></div>'+
+               ' <div class="d-flex align-items-center mr-auto" id="weatherCorner-Center"> '+
+               '<h6 class="font-weight-bold">'+ newsHeadlines[newsIndex].title +'</h6>'+
+              ' </div> ');
+
+            $('#newsCorner-Body').html(
+                '<div class="table-borderless">'+
+                '<table class="table table-bordered table-sm border-0 mb-0"'+
+                'style="width:400px;max-width: 400px;overflow: hidden;">'+
+                '<thead>'+
+                '<tr>'+
+                '<th></th>'+
+                '<th></th>'+
+                '</tr>'+
+                '</thead>'+
+                '<tbody>'+
+                '<tr>'+
+                '<td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>'+
+                '<td class="small">'+ newsHeadlines[newsIndex + 1].title +'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>'+
+                '<td class="small">'+ newsHeadlines[newsIndex + 2].title +'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td><span><i class="far fa-newspaper calendaCorner-Icon"></i></span></td>'+
+                '<td class="small">'+ newsHeadlines[newsIndex + 3].title +'</td>'+
+                '</tr>'+
+                '</tbody>'+
+                '</table>'+
+            '</div>'
+            );
+        }
     }   
 
     setInterval(dateTime, 1e3);
@@ -318,4 +363,15 @@ $(document).ready(function () {
 
     updateWeather();
     updateNews();
+
+    setInterval(() => {
+       
+        if (newsIndex === 6) {
+            newsIndex =0
+        } 
+        else{
+            newsIndex ++;
+        } 
+        updateNews();
+    }, 15000);
 });
